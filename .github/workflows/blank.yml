@@ -1,0 +1,29 @@
+name: Check CLI Tools
+
+on:
+  workflow_dispatch:  # allows manual run
+
+jobs:
+  check-tools:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check AWS CLI
+        run: |
+          if command -v aws &> /dev/null; then
+            echo "✅ AWS CLI is installed"
+            aws --version
+          else
+            echo "❌ AWS CLI is NOT installed"
+            exit 1
+          fi
+
+      - name: Check kubectl CLI
+        run: |
+          if command -v kubectl &> /dev/null; then
+            echo "✅ kubectl is installed"
+            kubectl version --client --short
+          else
+            echo "❌ kubectl is NOT installed"
+            exit 1
+          fi
