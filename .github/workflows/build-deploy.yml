@@ -22,13 +22,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push Docker image
-        id: set-image
-        run: |
-          IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}
-          echo "image=$IMAGE" >> $GITHUB_OUTPUT
-          docker build -t $IMAGE .
-          docker push $IMAGE
+      # - name: Build and Push Docker image
+      #   id: set-image
+      #   run: |
+      #     IMAGE=ghcr.io/${{ github.repository }}:${{ github.sha }}
+      #     echo "image=$IMAGE" >> $GITHUB_OUTPUT
+      #     docker build -t $IMAGE .
+      #     docker push $IMAGE
 
   approve-and-echo:
     needs: build
