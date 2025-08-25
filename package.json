@@ -1,0 +1,11 @@
+{
+  "name": "gh-actions-playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/atharva-unde/gh-actions-playground.git",
+  "author": "Atharva Unde <atharva@confiancebizsol.in>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
