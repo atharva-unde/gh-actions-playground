@@ -1,1 +1,1 @@
-# gh-actions-playground
+# GH Actions Playground
