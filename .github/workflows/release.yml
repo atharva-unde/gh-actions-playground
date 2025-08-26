@@ -1,4 +1,4 @@
-name: Release
+name: Release on Merge to Main
 
 on:
   push:
@@ -7,25 +7,33 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
+      - name: Get Next Version
+        id: version
+        run: |
+          # Example: bump patch version based on last tag
+          latest=$(git describe --tags --abbrev=0 || echo "v0.0.0")
+          echo "Latest tag: $latest"
 
-      - name: Install deps
-        run: npm install release
+          # Split version into parts
+          IFS='.' read -r major minor patch <<<"${latest#v}"
 
-      - name: Create release PR or publish
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
+          # Increment patch
+          new_tag="v$major.$minor.$((patch+1))"
+
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.new_tag }}" \
+            --target main \
+            --generate-notes
