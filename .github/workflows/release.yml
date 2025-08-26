@@ -21,7 +21,7 @@ jobs:
           node-version: 24
 
       - name: Install deps
-        run: npm ci
+        run: npm install release
 
       - name: Create release PR or publish
         uses: changesets/action@v1
